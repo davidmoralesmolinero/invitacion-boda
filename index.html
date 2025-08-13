@@ -1,161 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitación Boda - Jacqueline & David</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0; padding: 0;
-    background-color: #fafafa;
-  }
-  header {
-    background: url('media/hacienda-atongo.jpg') no-repeat center/cover;
-    padding: 20px;
-    text-align: center;
-    color: white;
-  }
-  nav {
-    background-color: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 10px;
-  }
-  nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  section { display: none; padding: 20px; }
-  section.active { display: block; }
-  .carousel { position: relative; height: 400px; overflow: hidden; }
-  .carousel img {
-    position: absolute;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    opacity: 0; transition: opacity 1s;
-  }
-  .carousel img.active { opacity: 1; }
-
-  /* Overlay de bienvenida */
-  #overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('media/hacienda-atongo.jpg') no-repeat center/cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    color: white;
-    text-shadow: 2px 2px 5px black;
-  }
-  #overlay button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    font-size: 18px;
-    background: rgba(255,255,255,0.85);
-    border: none;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invitación Jacqueline & David</title>
+  <link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body>
 
-<!-- Overlay -->
-<div id="overlay">
-  <h1>Jacqueline & David</h1>
-  <p>Abril 2026 - Hacienda Atongo, Querétaro</p>
-  <button id="enterBtn">Entrar a la invitación</button>
-</div>
-
 <header>
-  <h1>Jacqueline & David</h1>
-  <p>Abril 2026 - Hacienda Atongo, Querétaro</p>
+  <div class="header-content" style="background-image: url('media/hacienda-atongo.jpg');">
+    <h1>Jacqueline & David</h1>
+    <nav>
+      <a href="#portada">Portada</a>
+      <a href="#asistencia">Asistencia</a>
+      <a href="#hoteles">Hoteles</a>
+      <a href="#turismo">Turismo</a>
+      <a href="#galeria">Galería</a>
+    </nav>
+  </div>
 </header>
 
-<nav>
-  <a onclick="showSection('portada')">Portada</a>
-  <a onclick="showSection('asistencia')">Asistencia</a>
-  <a onclick="showSection('hoteles')">Hoteles</a>
-  <a onclick="showSection('turismo')">Turismo</a>
-  <a onclick="showSection('galeria')">Galería</a>
-</nav>
+<section id="portada" class="section portada">
+  <audio id="mariachiAudio" src="media/mariachi.mp3"></audio>
+  <div id="carrusel" class="carrusel">
+    <img src="media/foto1.jpg" alt="Foto 1">
+    <img src="media/foto2.jpg" alt="Foto 2">
+    <img src="media/foto3.jpg" alt="Foto 3">
+    <img src="media/foto4.jpg" alt="Foto 4">
+    <img src="media/foto5.jpg" alt="Foto 5">
+  </div>
+  <button id="playMusicBtn" style="display:none;">Activar música</button>
+</section>
 
-<main>
-  <section id="portada" class="active">
-    <div class="carousel">
-      <img src="media/foto1.jpg" class="active">
-      <img src="media/foto2.jpg">
-      <img src="media/foto3.jpg">
-      <img src="media/foto4.jpg">
-      <img src="media/foto5.jpg">
-    </div>
-  </section>
+<section id="asistencia" class="section asistencia">
+  <h2>Confirmar asistencia</h2>
+  <form id="rsvpForm">
+    <label>Nombre: <input type="text" name="nombre" required></label>
+    <label>Email: <input type="email" name="email" required></label>
+    <label>¿Asistirás?
+      <select name="asistencia" required>
+        <option value="">Seleccionar...</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+    </label>
+    <label>Restricciones alimenticias:
+      <input type="text" name="restricciones">
+    </label>
+    <button type="submit">Enviar</button>
+  </form>
+</section>
 
-  <section id="asistencia">
-    <h2>Confirmar asistencia</h2>
-    <form>
-      <label>Nombre: <input type="text" name="nombre"></label><br>
-      <label>Asistiré: <input type="checkbox" name="asistire"></label><br>
-      <label>Restricciones alimenticias: <input type="text" name="restricciones"></label><br>
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
+<section id="hoteles" class="section hoteles">
+  <h2>Recomendaciones de hospedaje</h2>
+  <ul>
+    <li><strong>Hotel Hacienda Jurica</strong> - <a href="https://goo.gl/maps/..." target="_blank">Ver mapa</a></li>
+    <li><strong>Fiesta Americana Hacienda Galindo</strong> - <a href="https://goo.gl/maps/..." target="_blank">Ver mapa</a></li>
+  </ul>
+</section>
 
-  <section id="hoteles">
-    <h2>Hoteles recomendados</h2>
-    <ul>
-      <li>Hotel Hacienda Jurica – 5★ – Ambiente colonial, piscina, cerca de la Hacienda Atongo</li>
-      <li>Hotel Misión Juriquilla – 4★ – Confortable, buen precio, amplias áreas verdes</li>
-    </ul>
-  </section>
+<section id="turismo" class="section turismo">
+  <h2>Lugares turísticos en Querétaro</h2>
+  <p>Descubre el centro histórico, la Peña de Bernal, viñedos y mucho más.</p>
+</section>
 
-  <section id="turismo">
-    <h2>Lugares turísticos</h2>
-    <ul>
-      <li>Centro Histórico de Querétaro – Patrimonio UNESCO, arquitectura colonial</li>
-      <li>Viñedos La Redonda – Degustaciones y tours</li>
-      <li>Peña de Bernal – Uno de los monolitos más grandes del mundo</li>
-    </ul>
-  </section>
+<section id="galeria" class="section galeria">
+  <h2>Galería</h2>
+  <div class="gallery">
+    <img src="media/foto1.jpg" alt="Foto 1" class="gallery-img">
+    <img src="media/foto2.jpg" alt="Foto 2" class="gallery-img">
+    <img src="media/foto3.jpg" alt="Foto 3" class="gallery-img">
+    <img src="media/foto4.jpg" alt="Foto 4" class="gallery-img">
+    <img src="media/foto5.jpg" alt="Foto 5" class="gallery-img">
+  </div>
+</section>
 
-  <section id="galeria">
-    <h2>Galería de fotos</h2>
-    <img src="media/foto1.jpg" width="200">
-    <img src="media/foto2.jpg" width="200">
-    <img src="media/foto3.jpg" width="200">
-  </section>
-</main>
+<div id="lightbox" class="lightbox">
+  <span class="close">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
 
-<audio id="mariachi" loop>
-  <source src="media/mariachi.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-function showSection(id) {
-  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-let index = 0;
-const images = document.querySelectorAll('.carousel img');
-setInterval(() => {
-  images[index].classList.remove('active');
-  index = (index + 1) % images.length;
-  images[index].classList.add('active');
-}, 3000);
-
-document.getElementById('enterBtn').addEventListener('click', function() {
-  const audio = document.getElementById('mariachi');
-  audio.play().catch(err => console.log("Reproducción bloqueada:", err));
-  document.getElementById('overlay').style.display = 'none';
-});
-</script>
-
+<script src="js/script.js"></script>
 </body>
 </html>

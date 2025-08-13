@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Invitación de Boda - Jacqueline & David</title>
 <style>
   body {
@@ -23,6 +23,9 @@
     justify-content: center;
     gap: 15px;
     padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
   nav a {
     color: white;
@@ -44,8 +47,8 @@
     display: block;
   }
   @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   /* Carrusel */
   .carousel {
@@ -149,9 +152,9 @@
   <section id="hoteles">
     <h2>Recomendaciones de Hoteles</h2>
     <ul>
-      <li><strong>Hotel Misión Grand Juriquilla</strong> – A 15 min de la hacienda. <a href="https://www.mision.com.mx">Ver más</a></li>
-      <li><strong>Fiesta Americana Hacienda Galindo</strong> – Estilo colonial, a 20 min. <a href="https://www.fiestamericana.com">Ver más</a></li>
-      <li><strong>Casa Inn Premium Hotel Querétaro</strong> – Moderno y cómodo. <a href="https://www.casainn.com.mx">Ver más</a></li>
+      <li><strong>Hotel Misión Grand Juriquilla</strong> – A 15 min de la hacienda. <a href="https://www.mision.com.mx" target="_blank">Ver más</a></li>
+      <li><strong>Fiesta Americana Hacienda Galindo</strong> – Estilo colonial, a 20 min. <a href="https://www.fiestamericana.com" target="_blank">Ver más</a></li>
+      <li><strong>Casa Inn Premium Hotel Querétaro</strong> – Moderno y cómodo. <a href="https://www.casainn.com.mx" target="_blank">Ver más</a></li>
     </ul>
   </section>
 
@@ -184,7 +187,6 @@
 </audio>
 
 <script>
-  // Navegación SPA
   function showSection(id) {
     document.querySelectorAll('main section').forEach(sec => {
       sec.classList.remove('visible');

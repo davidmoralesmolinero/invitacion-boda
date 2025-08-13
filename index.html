@@ -30,16 +30,24 @@
       color: #8b1e3f;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
     section {
       padding: 2rem;
-      max-width: 900px;
+      max-width: 1100px;
       margin: auto;
+      display: none;
+    }
+    section.active {
+      display: block;
     }
     video {
-      max-width: 100%;
+      width: 100%;
+      max-width: 900px; /* más grande en laptop */
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: block;
+      margin: auto;
     }
     h2 {
       color: #8b1e3f;
@@ -53,27 +61,7 @@
       margin-top: 1rem;
       font-weight: bold;
       color: #8b1e3f;
-    }
-    canvas#fuegos {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
-    img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-    button {
-      background: #8b1e3f;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    button:hover {
-      background: #a52a4d;
+      text-align: center;
     }
   </style>
 </head>
@@ -84,21 +72,23 @@
   </header>
 
   <nav>
-    <a href="#portada">Portada</a>
-    <a href="#asistencia">Asistencia</a>
-    <a href="#hoteles">Hoteles</a>
-    <a href="#turismo">Turismo</a>
-    <a href="#galeria">Galería</a>
+    <a data-tab="portada">Portada</a>
+    <a data-tab="asistencia">Asistencia</a>
+    <a data-tab="hoteles">Hoteles</a>
+    <a data-tab="turismo">Turismo</a>
+    <a data-tab="galeria">Galería</a>
   </nav>
 
-  <section id="portada">
+  <!-- PORTADA -->
+  <section id="portada" class="active">
     <video controls autoplay muted loop playsinline>
-      <source src="portada.mp4" type="video/mp4">
+      <source src="media/portada.mp4" type="video/mp4">
       Tu navegador no soporta el elemento de video.
     </video>
     <div class="contador" id="contador"></div>
   </section>
 
+  <!-- ASISTENCIA -->
   <section id="asistencia">
     <h2>Confirmar asistencia</h2>
     <form>
@@ -117,6 +107,7 @@
     </form>
   </section>
 
+  <!-- HOTELES -->
   <section id="hoteles">
     <h2>Recomendaciones de hoteles</h2>
     <ul>
@@ -126,6 +117,7 @@
     </ul>
   </section>
 
+  <!-- TURISMO -->
   <section id="turismo">
     <h2>Qué hacer en Querétaro</h2>
     <p>Querétaro es una ciudad colonial con un hermoso centro histórico y cercanía a rutas del vino y queso.</p>
@@ -136,25 +128,32 @@
     </ul>
   </section>
 
+  <!-- GALERIA -->
   <section id="galeria">
     <h2>Galería</h2>
     <p>Un recorrido por nuestros mejores momentos juntos ❤️</p>
     <div style="display:flex; flex-wrap: wrap; gap:10px; justify-content: center;">
-      <img src="https://via.placeholder.com/200" alt="Foto 1">
-      <img src="https://via.placeholder.com/200" alt="Foto 2">
-      <img src="https://via.placeholder.com/200" alt="Foto 3">
+      <img src="https://via.placeholder.com/250" alt="Foto 1">
+      <img src="https://via.placeholder.com/250" alt="Foto 2">
+      <img src="https://via.placeholder.com/250" alt="Foto 3">
     </div>
   </section>
 
-  <canvas id="fuegos"></canvas>
-  <audio id="musicaMariachi" src="mariachi.mp3"></audio>
-
   <script>
+    // Tabs
+    document.querySelectorAll("nav a").forEach(tab => {
+      tab.addEventListener("click", () => {
+        const target = tab.getAttribute("data-tab");
+        document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+        document.getElementById(target).classList.add("active");
+      });
+    });
+
+    // Contador regresivo
     const fechaBoda = new Date("April 18, 2026 17:00:00").getTime();
     const contadorEl = document.getElementById("contador");
-    const musica = document.getElementById("musicaMariachi");
 
-    const intervalo = setInterval(() => {
+    setInterval(() => {
       const ahora = new Date().getTime();
       const distancia = fechaBoda - ahora;
       const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
@@ -162,47 +161,12 @@
       const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-      contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
-
-      if (distancia < 0) {
-        clearInterval(intervalo);
+      if (distancia > 0) {
+        contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      } else {
         contadorEl.textContent = "¡Llegó el gran día!";
-        musica.play();
-        lanzarFuegos();
       }
     }, 1000);
-
-    const canvas = document.getElementById("fuegos");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    function lanzarFuegos() {
-      let particulas = [];
-      for (let i = 0; i < 100; i++) {
-        particulas.push({
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-          vx: Math.random() * 10 - 5,
-          vy: Math.random() * 10 - 5,
-          life: 100
-        });
-      }
-      const anim = setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particulas.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 3, 0, 2 * Math.PI);
-          ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
-          ctx.fill();
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life--;
-        });
-        particulas = particulas.filter(p => p.life > 0);
-        if (particulas.length === 0) clearInterval(anim);
-      }, 30);
-    }
   </script>
 </body>
 </html>

@@ -2,144 +2,99 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Invitación Boda Jacqueline & David</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boda Jacqueline & David</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #fdf6f6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fafafa;
+      color: #333;
     }
     header {
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
       background-image: url('media/hacienda-atongo.jpg');
       background-size: cover;
       background-position: center;
+      padding: 60px 20px;
+      text-align: center;
+      color: white;
     }
-    header h1, header p {
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     }
     nav {
-      display: flex;
-      justify-content: center;
-      background-color: #f8d7da;
-      flex-wrap: wrap;
+      background-color: rgba(178, 34, 34, 0.9);
+      padding: 10px;
+      text-align: center;
     }
-    nav button {
-      background: none;
-      border: none;
-      padding: 15px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      color: #b22222;
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
     }
-    nav button:hover {
-      background-color: #f1b0b7;
+    nav a:hover {
+      text-decoration: underline;
     }
-    section {
-      padding: 20px;
-    }
-    /* Carrusel */
-    .carousel {
+    .carrusel {
       position: relative;
-      max-width: 90%;
-      margin: auto;
-      border-radius: 12px;
+      max-width: 900px;
+      margin: 30px auto;
       overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-    .carousel img {
+    .carrusel img {
       width: 100%;
       display: none;
     }
-    .carousel img.active {
+    .carrusel img.active {
       display: block;
-    }
-    /* Botón de sonido */
-    #activarSonido {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #b22222;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Jacqueline Oviedo Nava & David Morales Molinero</h1>
-    <p>Abril 2026 - Hacienda Atongo, Querétaro</p>
+    <h1>Jacqueline & David</h1>
   </header>
 
   <nav>
-    <button data-section="portada">Portada</button>
-    <button data-section="asistencia">Confirmar asistencia</button>
-    <button data-section="hoteles">Hoteles</button>
-    <button data-section="turismo">Turismo</button>
-    <button data-section="galeria">Galería</button>
+    <a href="index.html">Portada</a>
+    <a href="asistencia.html">Confirmar asistencia</a>
+    <a href="hoteles.html">Hoteles</a>
+    <a href="turismo.html">Turismo</a>
+    <a href="galeria.html">Galería</a>
   </nav>
 
-  <section id="content">
-    <!-- Portada inicial -->
-    <div id="portada" class="section">
-      <div class="carousel" id="carrusel">
-        <img src="media/foto1.jpg" class="active" alt="Foto 1">
+  <main>
+    <section id="portada">
+      <div class="carrusel">
+        <img src="media/foto1.jpg" alt="Foto 1" class="active">
         <img src="media/foto2.jpg" alt="Foto 2">
         <img src="media/foto3.jpg" alt="Foto 3">
         <img src="media/foto4.jpg" alt="Foto 4">
         <img src="media/foto5.jpg" alt="Foto 5">
       </div>
-      <button id="activarSonido">🎵 Activar música</button>
-      <audio id="musicaMariachi" loop>
-        <source src="media/mariachi.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-      </audio>
-    </div>
-  </section>
+    </section>
+  </main>
+
+  <!-- Música que se reproducirá automáticamente -->
+  <audio autoplay loop>
+    <source src="media/mariachi.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
 
   <script>
-    const content = document.getElementById("content");
-    const sections = { portada: document.getElementById("portada") };
-
     // Carrusel automático
-    let currentIndex = 0;
-    const slides = document.querySelectorAll("#carrusel img");
+    const imagenes = document.querySelectorAll('.carrusel img');
+    let indice = 0;
     setInterval(() => {
-      slides[currentIndex].classList.remove("active");
-      currentIndex = (currentIndex + 1) % slides.length;
-      slides[currentIndex].classList.add("active");
+      imagenes[indice].classList.remove('active');
+      indice = (indice + 1) % imagenes.length;
+      imagenes[indice].classList.add('active');
     }, 3000);
-
-    // Activar música
-    document.getElementById("activarSonido").addEventListener("click", () => {
-      const audio = document.getElementById("musicaMariachi");
-      audio.play();
-    });
-
-    // Cargar secciones al hacer clic en el menú
-    document.querySelectorAll("nav button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const section = btn.getAttribute("data-section");
-
-        if (section === "portada") {
-          content.innerHTML = "";
-          content.appendChild(sections.portada);
-        } else {
-          fetch(section + ".html")
-            .then(res => res.text())
-            .then(html => {
-              content.innerHTML = html;
-            })
-            .catch(() => {
-              content.innerHTML = "<p>Error al cargar la sección.</p>";
-            });
-        }
-      });
-    });
   </script>
 </body>
 </html>

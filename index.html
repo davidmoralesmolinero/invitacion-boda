@@ -1,100 +1,206 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boda Jacqueline & David</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fafafa;
-      color: #333;
-    }
-    header {
-      background-image: url('media/hacienda-atongo.jpg');
-      background-size: cover;
-      background-position: center;
-      padding: 60px 20px;
-      text-align: center;
-      color: white;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin: 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    }
-    nav {
-      background-color: rgba(178, 34, 34, 0.9);
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .carrusel {
-      position: relative;
-      max-width: 900px;
-      margin: 30px auto;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .carrusel img {
-      width: 100%;
-      display: none;
-    }
-    .carrusel img.active {
-      display: block;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación de Boda - Jacqueline & David</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fafafa;
+    color: #333;
+  }
+  header {
+    background: url('media/hacienda-atongo.jpg') center/cover no-repeat;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  nav {
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  main {
+    padding: 20px;
+  }
+  section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  section.visible {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  /* Carrusel */
+  .carousel {
+    position: relative;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .carousel img {
+    width: 100%;
+    display: none;
+  }
+  .carousel img.active {
+    display: block;
+  }
+  /* Galería */
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  .galeria img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  form {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  input, select, textarea, button {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  button {
+    background: #a32c2c;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #821f1f;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Jacqueline & David</h1>
-  </header>
 
-  <nav>
-    <a href="index.html">Portada</a>
-    <a href="asistencia.html">Confirmar asistencia</a>
-    <a href="hoteles.html">Hoteles</a>
-    <a href="turismo.html">Turismo</a>
-    <a href="galeria.html">Galería</a>
-  </nav>
+<header>
+  <h1>Jacqueline & David</h1>
+  <p>Abril 2026 - Hacienda Atongo, Querétaro</p>
+</header>
 
-  <main>
-    <section id="portada">
-      <div class="carrusel">
-        <img src="media/foto1.jpg" alt="Foto 1" class="active">
-        <img src="media/foto2.jpg" alt="Foto 2">
-        <img src="media/foto3.jpg" alt="Foto 3">
-        <img src="media/foto4.jpg" alt="Foto 4">
-        <img src="media/foto5.jpg" alt="Foto 5">
-      </div>
-    </section>
-  </main>
+<nav>
+  <a onclick="showSection('portada')">Portada</a>
+  <a onclick="showSection('asistencia')">Asistencia</a>
+  <a onclick="showSection('hoteles')">Hoteles</a>
+  <a onclick="showSection('turismo')">Turismo</a>
+  <a onclick="showSection('galeria')">Galería</a>
+</nav>
 
-  <!-- Música que se reproducirá automáticamente -->
-  <audio autoplay loop>
-    <source src="media/mariachi.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio.
-  </audio>
+<main>
+  <!-- Portada -->
+  <section id="portada" class="visible">
+    <div class="carousel">
+      <img src="media/foto1.jpg" class="active" alt="Foto 1">
+      <img src="media/foto2.jpg" alt="Foto 2">
+      <img src="media/foto3.jpg" alt="Foto 3">
+      <img src="media/foto4.jpg" alt="Foto 4">
+      <img src="media/foto5.jpg" alt="Foto 5">
+    </div>
+  </section>
 
-  <script>
-    // Carrusel automático
-    const imagenes = document.querySelectorAll('.carrusel img');
-    let indice = 0;
-    setInterval(() => {
-      imagenes[indice].classList.remove('active');
-      indice = (indice + 1) % imagenes.length;
-      imagenes[indice].classList.add('active');
-    }, 3000);
-  </script>
+  <!-- Asistencia -->
+  <section id="asistencia">
+    <h2>Confirmar asistencia</h2>
+    <p>Por favor, confirma tu asistencia y cuéntanos si tienes alguna restricción alimenticia.</p>
+    <form>
+      <label>Nombre completo:</label>
+      <input type="text" name="nombre" required>
+
+      <label>¿Asistirás?</label>
+      <select name="asistencia" required>
+        <option value="">Selecciona</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+
+      <label>Restricciones alimenticias:</label>
+      <textarea name="restricciones" placeholder="Ejemplo: vegetariano, sin gluten..."></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <!-- Hoteles -->
+  <section id="hoteles">
+    <h2>Recomendaciones de Hoteles</h2>
+    <ul>
+      <li><strong>Hotel Misión Grand Juriquilla</strong> – A 15 min de la hacienda. <a href="https://www.mision.com.mx">Ver más</a></li>
+      <li><strong>Fiesta Americana Hacienda Galindo</strong> – Estilo colonial, a 20 min. <a href="https://www.fiestamericana.com">Ver más</a></li>
+      <li><strong>Casa Inn Premium Hotel Querétaro</strong> – Moderno y cómodo. <a href="https://www.casainn.com.mx">Ver más</a></li>
+    </ul>
+  </section>
+
+  <!-- Turismo -->
+  <section id="turismo">
+    <h2>Qué hacer en Querétaro</h2>
+    <h3>Centro Histórico</h3>
+    <p>Pasea por las calles empedradas, visita templos barrocos y disfruta de la gastronomía local.</p>
+    <h3>Viñedos</h3>
+    <p>Explora viñedos como Freixenet o Viñedos La Redonda para degustar vinos locales.</p>
+    <h3>Peña de Bernal</h3>
+    <p>Uno de los monolitos más grandes del mundo, perfecto para una excursión de medio día.</p>
+  </section>
+
+  <!-- Galería -->
+  <section id="galeria">
+    <h2>Galería de Fotos</h2>
+    <div class="galeria">
+      <img src="media/foto1.jpg" alt="Foto 1">
+      <img src="media/foto2.jpg" alt="Foto 2">
+      <img src="media/foto3.jpg" alt="Foto 3">
+      <img src="media/foto4.jpg" alt="Foto 4">
+      <img src="media/foto5.jpg" alt="Foto 5">
+    </div>
+  </section>
+</main>
+
+<audio id="mariachi" autoplay loop>
+  <source src="media/mariachi.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Navegación SPA
+  function showSection(id) {
+    document.querySelectorAll('main section').forEach(sec => {
+      sec.classList.remove('visible');
+    });
+    document.getElementById(id).classList.add('visible');
+  }
+
+  // Carrusel automático
+  let index = 0;
+  const images = document.querySelectorAll('.carousel img');
+  setInterval(() => {
+    images[index].classList.remove('active');
+    index = (index + 1) % images.length;
+    images[index].classList.add('active');
+  }, 3000);
+</script>
+
 </body>
 </html>

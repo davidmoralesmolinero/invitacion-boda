@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Invitación Boda Jacqueline & David</title>
   <style>
     body {
@@ -11,15 +11,21 @@
       background-color: #fdf6f6;
     }
     header {
-      background-color: #b22222;
       color: white;
-      padding: 20px;
+      padding: 40px 20px;
       text-align: center;
+      background-image: url('media/hacienda-atongo.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    header h1, header p {
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     }
     nav {
       display: flex;
       justify-content: center;
       background-color: #f8d7da;
+      flex-wrap: wrap;
     }
     nav button {
       background: none;
@@ -35,11 +41,22 @@
     section {
       padding: 20px;
     }
-    #portada video {
+    /* Carrusel */
+    .carousel {
+      position: relative;
       max-width: 90%;
-      height: auto;
+      margin: auto;
       border-radius: 12px;
+      overflow: hidden;
     }
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    /* Botón de sonido */
     #activarSonido {
       padding: 10px 20px;
       font-size: 16px;
@@ -67,14 +84,20 @@
   </nav>
 
   <section id="content">
-    <!-- Portada -->
+    <!-- Portada inicial -->
     <div id="portada" class="section">
-      <video id="videoPortada" autoplay muted playsinline loop>
-        <source src="media/portada.mp4" type="video/mp4">
-        Tu navegador no soporta el elemento de video.
-      </video>
-      <br>
-      <button id="activarSonido">🔊 Activar sonido</button>
+      <div class="carousel" id="carrusel">
+        <img src="media/foto1.jpg" class="active" alt="Foto 1">
+        <img src="media/foto2.jpg" alt="Foto 2">
+        <img src="media/foto3.jpg" alt="Foto 3">
+        <img src="media/foto4.jpg" alt="Foto 4">
+        <img src="media/foto5.jpg" alt="Foto 5">
+      </div>
+      <button id="activarSonido">🎵 Activar música</button>
+      <audio id="musicaMariachi" loop>
+        <source src="media/mariachi.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
     </div>
   </section>
 
@@ -82,11 +105,19 @@
     const content = document.getElementById("content");
     const sections = { portada: document.getElementById("portada") };
 
-    // Activar sonido del video
-    document.getElementById("activarSonido").addEventListener("click", function() {
-      const video = document.getElementById("videoPortada");
-      video.muted = false;
-      video.play();
+    // Carrusel automático
+    let currentIndex = 0;
+    const slides = document.querySelectorAll("#carrusel img");
+    setInterval(() => {
+      slides[currentIndex].classList.remove("active");
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add("active");
+    }, 3000);
+
+    // Activar música
+    document.getElementById("activarSonido").addEventListener("click", () => {
+      const audio = document.getElementById("musicaMariachi");
+      audio.play();
     });
 
     // Cargar secciones al hacer clic en el menú

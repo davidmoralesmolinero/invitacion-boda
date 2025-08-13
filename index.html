@@ -37,13 +37,16 @@
       max-width: 1100px;
       margin: auto;
       display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
     section.active {
       display: block;
+      opacity: 1;
     }
     video {
       width: 100%;
-      max-width: 900px; /* más grande en laptop */
+      max-width: 900px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       display: block;
@@ -80,7 +83,7 @@
   </nav>
 
   <!-- PORTADA -->
-  <section id="portada" class="active">
+  <section id="portada" class="active" data-loaded="true">
     <video controls autoplay muted loop playsinline>
       <source src="media/portada.mp4" type="video/mp4">
       Tu navegador no soporta el elemento de video.
@@ -89,63 +92,41 @@
   </section>
 
   <!-- ASISTENCIA -->
-  <section id="asistencia">
-    <h2>Confirmar asistencia</h2>
-    <form>
-      <label>Nombre:<br><input type="text" required></label><br><br>
-      <label>¿Asistirás?<br>
-        <select required>
-          <option value="">Selecciona...</option>
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
-      </label><br><br>
-      <label>Restricciones alimenticias:<br>
-        <input type="text" placeholder="Ej. vegetariano, sin gluten">
-      </label><br><br>
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
+  <section id="asistencia" data-src="asistencia.html"></section>
 
   <!-- HOTELES -->
-  <section id="hoteles">
-    <h2>Recomendaciones de hoteles</h2>
-    <ul>
-      <li><strong>Hotel Hacienda Jurica by Brisas</strong> – Estilo colonial, a 15 min de la hacienda.</li>
-      <li><strong>Casa Inn Premium Hotel Queretaro</strong> – Moderno y cómodo, cerca del centro.</li>
-      <li><strong>Doña Urraca Hotel & Spa</strong> – Boutique con spa en pleno centro histórico.</li>
-    </ul>
-  </section>
+  <section id="hoteles" data-src="hoteles.html"></section>
 
   <!-- TURISMO -->
-  <section id="turismo">
-    <h2>Qué hacer en Querétaro</h2>
-    <p>Querétaro es una ciudad colonial con un hermoso centro histórico y cercanía a rutas del vino y queso.</p>
-    <ul>
-      <li><strong>Centro Histórico</strong>: Patrimonio de la Humanidad, lleno de plazas, templos y museos.</li>
-      <li><strong>Peña de Bernal</strong>: Uno de los monolitos más grandes del mundo, ideal para senderismo.</li>
-      <li><strong>Ruta del Arte, Queso y Vino</strong>: Visita viñedos y queserías locales.</li>
-    </ul>
-  </section>
+  <section id="turismo" data-src="turismo.html"></section>
 
   <!-- GALERIA -->
-  <section id="galeria">
-    <h2>Galería</h2>
-    <p>Un recorrido por nuestros mejores momentos juntos ❤️</p>
-    <div style="display:flex; flex-wrap: wrap; gap:10px; justify-content: center;">
-      <img src="https://via.placeholder.com/250" alt="Foto 1">
-      <img src="https://via.placeholder.com/250" alt="Foto 2">
-      <img src="https://via.placeholder.com/250" alt="Foto 3">
-    </div>
-  </section>
+  <section id="galeria" data-src="galeria.html"></section>
 
   <script>
-    // Tabs
+    // Tabs con lazy loading
     document.querySelectorAll("nav a").forEach(tab => {
       tab.addEventListener("click", () => {
-        const target = tab.getAttribute("data-tab");
-        document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-        document.getElementById(target).classList.add("active");
+        const targetId = tab.getAttribute("data-tab");
+        const targetSection = document.getElementById(targetId);
+
+        // Ocultar todas las secciones
+        document.querySelectorAll("section").forEach(sec => {
+          sec.classList.remove("active");
+        });
+
+        // Lazy load si no se ha cargado aún
+        if (!targetSection.dataset.loaded && targetSection.dataset.src) {
+          fetch(targetSection.dataset.src)
+            .then(res => res.text())
+            .then(html => {
+              targetSection.innerHTML = html;
+              targetSection.dataset.loaded = "true";
+              targetSection.classList.add("active");
+            });
+        } else {
+          targetSection.classList.add("active");
+        }
       });
     });
 

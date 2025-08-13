@@ -1,21 +1,114 @@
-<section id="portada" style="text-align:center; padding:20px;">
-  <video id="videoPortada" 
-         style="max-width:90%; height:auto; border-radius:12px;"
-         autoplay muted playsinline loop>
-    <source src="media/portada.mp4" type="video/mp4">
-    Tu navegador no soporta el elemento de video.
-  </video>
-  <br><br>
-  <button id="activarSonido" 
-          style="padding:10px 20px; font-size:16px; cursor:pointer; background:#b22222; color:white; border:none; border-radius:8px;">
-    🔊 Activar sonido
-  </button>
-</section>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación Boda Jacqueline & David</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #fdf6f6;
+    }
+    header {
+      background-color: #b22222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #f8d7da;
+    }
+    nav button {
+      background: none;
+      border: none;
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      color: #b22222;
+    }
+    nav button:hover {
+      background-color: #f1b0b7;
+    }
+    section {
+      padding: 20px;
+    }
+    #portada video {
+      max-width: 90%;
+      height: auto;
+      border-radius: 12px;
+    }
+    #activarSonido {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #b22222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Jacqueline Oviedo Nava & David Morales Molinero</h1>
+    <p>Abril 2026 - Hacienda Atongo, Querétaro</p>
+  </header>
 
-<script>
-document.getElementById("activarSonido").addEventListener("click", function() {
-  const video = document.getElementById("videoPortada");
-  video.muted = false;
-  video.play();
-});
-</script>
+  <nav>
+    <button data-section="portada">Portada</button>
+    <button data-section="asistencia">Confirmar asistencia</button>
+    <button data-section="hoteles">Hoteles</button>
+    <button data-section="turismo">Turismo</button>
+    <button data-section="galeria">Galería</button>
+  </nav>
+
+  <section id="content">
+    <!-- Portada -->
+    <div id="portada" class="section">
+      <video id="videoPortada" autoplay muted playsinline loop>
+        <source src="media/portada.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+      <br>
+      <button id="activarSonido">🔊 Activar sonido</button>
+    </div>
+  </section>
+
+  <script>
+    const content = document.getElementById("content");
+    const sections = { portada: document.getElementById("portada") };
+
+    // Activar sonido del video
+    document.getElementById("activarSonido").addEventListener("click", function() {
+      const video = document.getElementById("videoPortada");
+      video.muted = false;
+      video.play();
+    });
+
+    // Cargar secciones al hacer clic en el menú
+    document.querySelectorAll("nav button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const section = btn.getAttribute("data-section");
+
+        if (section === "portada") {
+          content.innerHTML = "";
+          content.appendChild(sections.portada);
+        } else {
+          fetch(section + ".html")
+            .then(res => res.text())
+            .then(html => {
+              content.innerHTML = html;
+            })
+            .catch(() => {
+              content.innerHTML = "<p>Error al cargar la sección.</p>";
+            });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

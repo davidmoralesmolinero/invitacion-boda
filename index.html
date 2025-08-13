@@ -39,9 +39,39 @@
     opacity: 0; transition: opacity 1s;
   }
   .carousel img.active { opacity: 1; }
+
+  /* Overlay de bienvenida */
+  #overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('media/hacienda-atongo.jpg') no-repeat center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+  }
+  #overlay button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+  }
 </style>
 </head>
 <body>
+
+<!-- Overlay -->
+<div id="overlay">
+  <h1>Jacqueline & David</h1>
+  <p>Abril 2026 - Hacienda Atongo, Querétaro</p>
+  <button id="enterBtn">Entrar a la invitación</button>
+</div>
 
 <header>
   <h1>Jacqueline & David</h1>
@@ -120,15 +150,11 @@ setInterval(() => {
   images[index].classList.add('active');
 }, 3000);
 
-// Activar música en la primera interacción
-const audio = document.getElementById('mariachi');
-function startMusic() {
+document.getElementById('enterBtn').addEventListener('click', function() {
+  const audio = document.getElementById('mariachi');
   audio.play().catch(err => console.log("Reproducción bloqueada:", err));
-  document.removeEventListener('click', startMusic);
-  document.removeEventListener('touchstart', startMusic);
-}
-document.addEventListener('click', startMusic);
-document.addEventListener('touchstart', startMusic);
+  document.getElementById('overlay').style.display = 'none';
+});
 </script>
 
 </body>

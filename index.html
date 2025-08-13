@@ -1,153 +1,21 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Boda Jacqueline & David - 18 Abril 2026</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #faf8f6;
-      color: #333;
-      line-height: 1.5;
-    }
-    header {
-      background: #8b1e3f;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    nav {
-      background: #f5e6e8;
-      padding: 0.5rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-    nav a {
-      color: #8b1e3f;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    section {
-      padding: 2rem;
-      max-width: 1100px;
-      margin: auto;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    section.active {
-      display: block;
-      opacity: 1;
-    }
-    video {
-      width: 100%;
-      max-width: 900px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: block;
-      margin: auto;
-    }
-    h2 {
-      color: #8b1e3f;
-      margin-top: 0;
-    }
-    ul {
-      padding-left: 20px;
-    }
-    .contador {
-      font-size: 1.5rem;
-      margin-top: 1rem;
-      font-weight: bold;
-      color: #8b1e3f;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Boda de Jacqueline Oviedo Nava & David Morales Molinero</h1>
-    <p>18 de Abril de 2026 · Hacienda Atongo, Querétaro</p>
-  </header>
+<section id="portada" style="text-align:center; padding:20px;">
+  <video id="videoPortada" 
+         style="max-width:90%; height:auto; border-radius:12px;"
+         autoplay muted playsinline loop>
+    <source src="media/portada.mp4" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+  </video>
+  <br><br>
+  <button id="activarSonido" 
+          style="padding:10px 20px; font-size:16px; cursor:pointer; background:#b22222; color:white; border:none; border-radius:8px;">
+    🔊 Activar sonido
+  </button>
+</section>
 
-  <nav>
-    <a data-tab="portada">Portada</a>
-    <a data-tab="asistencia">Asistencia</a>
-    <a data-tab="hoteles">Hoteles</a>
-    <a data-tab="turismo">Turismo</a>
-    <a data-tab="galeria">Galería</a>
-  </nav>
-
-  <!-- PORTADA -->
-  <section id="portada" class="active" data-loaded="true">
-    <video controls autoplay muted loop playsinline>
-      <source src="media/portada.mp4" type="video/mp4">
-      Tu navegador no soporta el elemento de video.
-    </video>
-    <div class="contador" id="contador"></div>
-  </section>
-
-  <!-- ASISTENCIA -->
-  <section id="asistencia" data-src="asistencia.html"></section>
-
-  <!-- HOTELES -->
-  <section id="hoteles" data-src="hoteles.html"></section>
-
-  <!-- TURISMO -->
-  <section id="turismo" data-src="turismo.html"></section>
-
-  <!-- GALERIA -->
-  <section id="galeria" data-src="galeria.html"></section>
-
-  <script>
-    // Tabs con lazy loading
-    document.querySelectorAll("nav a").forEach(tab => {
-      tab.addEventListener("click", () => {
-        const targetId = tab.getAttribute("data-tab");
-        const targetSection = document.getElementById(targetId);
-
-        // Ocultar todas las secciones
-        document.querySelectorAll("section").forEach(sec => {
-          sec.classList.remove("active");
-        });
-
-        // Lazy load si no se ha cargado aún
-        if (!targetSection.dataset.loaded && targetSection.dataset.src) {
-          fetch(targetSection.dataset.src)
-            .then(res => res.text())
-            .then(html => {
-              targetSection.innerHTML = html;
-              targetSection.dataset.loaded = "true";
-              targetSection.classList.add("active");
-            });
-        } else {
-          targetSection.classList.add("active");
-        }
-      });
-    });
-
-    // Contador regresivo
-    const fechaBoda = new Date("April 18, 2026 17:00:00").getTime();
-    const contadorEl = document.getElementById("contador");
-
-    setInterval(() => {
-      const ahora = new Date().getTime();
-      const distancia = fechaBoda - ahora;
-      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-      if (distancia > 0) {
-        contadorEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
-      } else {
-        contadorEl.textContent = "¡Llegó el gran día!";
-      }
-    }, 1000);
-  </script>
-</body>
-</html>
+<script>
+document.getElementById("activarSonido").addEventListener("click", function() {
+  const video = document.getElementById("videoPortada");
+  video.muted = false;
+  video.play();
+});
+</script>
